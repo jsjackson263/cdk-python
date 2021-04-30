@@ -14,7 +14,7 @@ class HitCounter(core.Construct):
         super().__init__(scope, id, **kwargs)
 
         #define dynamodb table & lambda hitcount function
-        table = ddb.Table(
+        self._table = ddb.Table(
             self, 'Hits',
             partition_key={'name': 'path', 'type': ddb.AttributeType.STRING}
         )
@@ -26,11 +26,11 @@ class HitCounter(core.Construct):
             code=_lambda.Code.asset('lambda'),
             environment={
                 'DOWNSTREAM_FUNCTION_NAME': downstream.function_name,
-                'HITS_TABLE_NAME': table.table_name,
+                'HITS_TABLE_NAME': self._table.table_name,
             }
         )
 
-        table.grant_read_write_data(self.handler)
+        self._table.grant_read_write_data(self.handler)
         downstream.grant_invoke(self.handler)
-        
+
          

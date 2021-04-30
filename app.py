@@ -6,6 +6,6 @@ from cdk_python.cdk_python_stack import CdkPythonStack
 
 
 app = core.App()
-CdkPythonStack(app, "cdk-python", env={'region': 'us-west-2'})
+CdkPythonStack(app, "cdk-python", env={'region': 'us-east-1'})
 
 app.synth()
